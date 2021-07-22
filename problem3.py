@@ -102,23 +102,34 @@ def huffman_decoding(encoded_data, tree):
     return message
 
 
-if __name__ == '__main__':
+def test():
     codes = {}
 
     a_great_sentence = "The bird is the word"
 
-    print("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence)))
+    print("The size of the data is: {}".format(sys.getsizeof(a_great_sentence)))
     print("The content of the data is: {}\n".format(a_great_sentence))
+
 
     encoded_data, tree = huffman_encoding(a_great_sentence)
 
-    print("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
+    print("The size of the encoded data is: {}".format(sys.getsizeof(int(encoded_data, base=2))))
     print("The content of the encoded data is: {}\n".format(encoded_data))
+
+    # Assertion Test to see if there is an improvement in terms of size after Huffman compression
+    assert sys.getsizeof(int(encoded_data, base=2)) < sys.getsizeof(a_great_sentence), "The Compression did not reduce the size!"
 
     decoded_data = huffman_decoding(encoded_data, tree)
 
-    print("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+    print("The size of the decoded data is: {}".format(sys.getsizeof(decoded_data)))
     print("The content of the encoded data is: {}\n".format(decoded_data))
 
-    encoded_data, tree = huffman_encoding('Yeah Booooooeeeeiii')
-    print(huffman_decoding(encoded_data, tree))
+    # Assertion test to ensure no lost of information after encoding then decoding.
+    assert sys.getsizeof(decoded_data) == sys.getsizeof(a_great_sentence), "There is a loss of information after compression"
+    assert huffman_decoding(*huffman_encoding(a_great_sentence))== a_great_sentence, "Did not encode and decode correctly."
+
+
+
+if __name__ == '__main__':
+    test()
+    print('done')

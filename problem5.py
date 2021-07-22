@@ -68,7 +68,7 @@ class BlockChain:
             if tracker_node.get_data() == data_message:
                 return tracker_node
             tracker_node = tracker_node.get_previous_block()
-        return f'Does not exists'
+        return None
 
 
     def __str__(self):
@@ -87,8 +87,7 @@ class BlockChain:
         representation = f'{representation}\n{tracing_node}'
         return representation
 
-if __name__ == '__main__':
-
+def test():
     first = Block('Block1')
     first2 = Block('Block2')
     first3 = Block('Block3')
@@ -100,4 +99,23 @@ if __name__ == '__main__':
     BC.append(first3)
     BC.append(first4)
 
-    print(BC.find_block('Block3'))
+    trace_node = BC.head
+    # Assert the oldest block does not have a previous hash
+    assert BC.tail.get_previous_hash() == 0, f"The oldest/first block of the block chain should have a hash code of 0 not {BC.tail.get_previous_hash()}"
+    assert BC.tail.get_previous_block() is None, f"The oldest/first block of the block chain should have a hash code of 0 not {BC.tail.get_previous_block()}"
+
+    # Assert all other blocks (after the tail block) of the block chain has a hash number, a previous block and a previous block hash
+    while trace_node is not None:
+        if trace_node is not BC.tail:   # To exclude the tail block
+            assert trace_node.get_block_hash() is not None, "Block does not have Hash."
+            assert trace_node.get_previous_block() is not None, f"{trace_node} is not linked to a previous block."
+            assert trace_node.get_previous_hash() != 0, "Block of the block chain does not have a previous hash info!"
+        trace_node = trace_node.get_previous_block()
+
+    assert BC.find_block('Block3') is not None, "Block exists in Blockchain but was not found."
+    assert BC.find_block('Block10') is None, "Block does not exists in Blockchain but find_block() did not return None."
+
+
+if __name__ == '__main__':
+    test()
+    print('Done')

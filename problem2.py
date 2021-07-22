@@ -1,4 +1,3 @@
-#%%
 import os
 
 def find_files(suffix, path):
@@ -27,6 +26,13 @@ def find_files(suffix, path):
     return target_list
 
 
+def test():
+    targetfile_list = find_files('.c', './testdir')
+    for file in targetfile_list:
+        assert os.path.isfile(file) is True, f"{file} is not a file."
+        _, ext = os.path.splitext(file)
+        assert ext == '.c', f'File extension of {file} is not ".c".'
 
-print(find_files('.c', './testdir'))
-
+if __name__ == '__main__':
+    test()
+    print('All pass')

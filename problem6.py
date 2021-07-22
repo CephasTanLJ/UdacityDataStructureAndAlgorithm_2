@@ -95,8 +95,29 @@ def test():
     for i in element_2:
         linked_list_2.append(i)
 
-    print(union(linked_list_1, linked_list_2))
-    print(intersection(linked_list_1, linked_list_2))
+    # print(union(linked_list_1, linked_list_2))
+    # print(intersection(linked_list_1, linked_list_2))
+
+    # Test correct assertion with sets()
+    answer1 = union(linked_list_1, linked_list_2)
+    answerSet1 = set()
+    trace_node = answer1.head
+    while trace_node is not None:
+        answerSet1.add(trace_node.value)
+        trace_node = trace_node.next
+
+    answer2 = intersection(linked_list_1, linked_list_2)
+    answerSet2 = set()
+    trace_node = answer2.head
+    while trace_node is not None:
+        answerSet2.add(trace_node.value)
+        trace_node = trace_node.next
+
+    assert set(element_1).union(set(element_2)) == answerSet1, \
+        f"Linked list should only contain values of {set(element_1).union(set(element_2))}, but it contains {answerSet1}."
+
+    assert set(element_1).intersection(set(element_2)) == answerSet2, \
+        f"Linked list should only contain values of {set(element_1).union(set(element_2))}, but it contains {answerSet2}."
 
     # Test case 2
 
@@ -112,8 +133,25 @@ def test():
     for i in element_2:
         linked_list_4.append(i)
 
-    print(union(linked_list_3, linked_list_4))
-    print(intersection(linked_list_3, linked_list_4))
+    # print(union(linked_list_3, linked_list_4))
+    # print(intersection(linked_list_3, linked_list_4))
+
+    # Test correct assertion with sets()
+    answer3 = union(linked_list_3, linked_list_4)
+    answerSet3 = set()
+    trace_node = answer3.head
+    while trace_node is not None:
+        answerSet3.add(trace_node.value)
+        trace_node = trace_node.next
+
+
+
+    assert set(element_1).union(set(element_2)) == answerSet3, \
+        f"Linked list should only contain values of {set(element_1).union(set(element_2))}, but it contains {answerSet3}."
+
+    assert intersection(linked_list_3, linked_list_4) is None, \
+        f"There should not be any intersection, but {intersection(linked_list_3, linked_list_4)} is returned"
 
 if __name__ == '__main__':
     test()
+    print('Done')

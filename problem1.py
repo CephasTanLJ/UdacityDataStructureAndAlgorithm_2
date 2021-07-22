@@ -1,4 +1,3 @@
-#%%
 from collections import deque
 
 class LRU_Cache(object):
@@ -39,7 +38,6 @@ class LRU_Cache(object):
     def __repr__(self):
         return f'{self.queue}'
 
-#%%
 
 def test():
     our_cache = LRU_Cache(5)
