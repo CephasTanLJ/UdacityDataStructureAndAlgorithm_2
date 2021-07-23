@@ -2,7 +2,7 @@
 by Cephas Tan Li-Jie
 ## Assignment description
 Write a function that provides an efficient look up of whether the user is in a group.
-given that the Group class uses a python list to store the information.
+Given that the Group class uses a python list to store the information.
 
 ## Method of implementation
 Using a recursive method similar to problem 2 (file recursion) to unveal the given group and the check if the user 

@@ -47,7 +47,7 @@ The `find_block(data_message)`method in the BlockChain allows you to find and re
 >> **Representation:**\
 >> Head Block 1 (newest)\
 >> Block 2 \
-> ...(number of blocks traversed)...\
+> ...\
 >> Tail Block
 
 

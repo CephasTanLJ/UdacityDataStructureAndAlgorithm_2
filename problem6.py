@@ -95,8 +95,12 @@ def test():
     for i in element_2:
         linked_list_2.append(i)
 
-    # print(union(linked_list_1, linked_list_2))
-    # print(intersection(linked_list_1, linked_list_2))
+    print('Test1:')
+    print(f'element_1 = {element_1}')
+    print(f'element_2 = {element_2}')
+    print(f'union: {union(linked_list_1, linked_list_2)}')
+    print(f'intersection: {intersection(linked_list_1, linked_list_2)}')
+    print()
 
     # Test correct assertion with sets()
     answer1 = union(linked_list_1, linked_list_2)
@@ -119,6 +123,7 @@ def test():
     assert set(element_1).intersection(set(element_2)) == answerSet2, \
         f"Linked list should only contain values of {set(element_1).union(set(element_2))}, but it contains {answerSet2}."
 
+def test2():
     # Test case 2
 
     linked_list_3 = LinkedList()
@@ -133,8 +138,12 @@ def test():
     for i in element_2:
         linked_list_4.append(i)
 
-    # print(union(linked_list_3, linked_list_4))
-    # print(intersection(linked_list_3, linked_list_4))
+    print('Test2:')
+    print(f'element_1 = {element_1}')
+    print(f'element_2 = {element_2}')
+    print(f'union: {union(linked_list_3, linked_list_4)}')
+    print(f'intersection: {intersection(linked_list_3, linked_list_4)}')
+    print()
 
     # Test correct assertion with sets()
     answer3 = union(linked_list_3, linked_list_4)
@@ -152,6 +161,30 @@ def test():
     assert intersection(linked_list_3, linked_list_4) is None, \
         f"There should not be any intersection, but {intersection(linked_list_3, linked_list_4)} is returned"
 
+def test3():
+    linked_list_5 = LinkedList()
+    linked_list_6 = LinkedList()
+
+    element_1 = []
+    element_2 = [1, 7, 8, 9, 11, 21, 1]
+
+    for i in element_1:
+        linked_list_5.append(i)
+
+    for i in element_2:
+        linked_list_6.append(i)
+
+    print('Test3:')
+    print(f'element_1 = {element_1}')
+    print(f'element_2 = {element_2}')
+    print(f'union: {union(linked_list_5, linked_list_6)}')
+    print(f'intersection: {intersection(linked_list_5, linked_list_6)}')
+    print()
+
+    assert intersection(linked_list_5, linked_list_6) is None, 'For intersection of empty linkedlist and a linked list should be None.'
+
 if __name__ == '__main__':
     test()
+    test2()
+    test3()
     print('Done')

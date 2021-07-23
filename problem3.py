@@ -5,12 +5,29 @@ import sys
 
 def huffman_encoding(data):
     # Creating dictionary of char {"A": Node('A', char_freq, binary_code, node_type) }
+    data = str(data)
+
+    # Edge case for data = '' or None
+    if len(data) == 0 or data == 'None':
+        raise ValueError('The data is an empty string')
+
+    # Continue for normal cases
     char_dict = dict()
     for char in data:
         if char not in char_dict:
             char_dict[char] = Node(char, 1)
         else:
             char_dict[char].frequency += 1
+
+    # Edge case when only 1 char type exists e.g., 'AAAAAAA', it should return 0000000 as code and Node('A',freq=7,code=None,Leaf)
+    encoded_str = ''
+    if len(char_dict) == 1:
+        for _ in data:
+            encoded_str = f'{encoded_str}0'
+
+        char = data[0]
+        huffman_tree = Tree(char_dict[char])
+        return encoded_str, huffman_tree
 
     # Priority Queue
     priority_queue = list(char_dict.values())
@@ -88,6 +105,14 @@ def huffman_encoding(data):
 def huffman_decoding(encoded_data, tree):
     message = str()
 
+    # To decode edge case whereby encoded("AAAAAAA") is "0000000"
+    if tree.root.is_leafNode():
+        char = tree.root.get_char()
+        for binary_code in encoded_data:
+            message = f'{message}{char}'
+        return message
+
+
     tracker_node = tree.root
     for binary_digit in encoded_data:
         if binary_digit == '0':
@@ -128,8 +153,39 @@ def test():
     assert sys.getsizeof(decoded_data) == sys.getsizeof(a_great_sentence), "There is a loss of information after compression"
     assert huffman_decoding(*huffman_encoding(a_great_sentence))== a_great_sentence, "Did not encode and decode correctly."
 
+def test2():
+    edge_sentence = 'AAAAAAA'
+    encoded_str, tree = huffman_encoding(edge_sentence)
+
+    assert encoded_str == '0000000', f'The encoded string for "AAAAAAA" should be "0000000", but {encoded_str} was returned.'
+    assert tree.root == Node('A',7), f'The huffman tree.root should be "Node(A,7,None,Leaf)", but {tree.root} was returned.'
+
+    assert huffman_decoding(encoded_str, tree) == 'AAAAAAA', f'decoding should return "AAAAAAA" but {huffman_decoding(encoded_str, tree)} was returned.'
+
+
+def test3():
+    '''Test if empty edge case raises the ValueError.'''
+    try:
+        empty_sentence = ''
+        encoded_str, tree = huffman_encoding(empty_sentence)
+        assert 'encoded_str' not in locals(),"test3: No encoded string should be generated, and and a ValueError should be raised for empty strings."
+        assert 'tree' not in locals(),"test3: No tree should be generated, and and a ValueError should be raised for empty strings."
+    except ValueError:
+        print('ValueError was successfully raised for empty sentence data input test3')
+
+def test4():
+    '''Test if None data edge case raises the ValueError.'''
+    try:
+        encoded_str, tree = huffman_encoding(None)
+        assert 'encoded_str' not in locals(),"test4: No encoded string should be generated, and and a ValueError should be raised for None data."
+        assert 'tree' not in locals(),"test4: No tree should be generated, and and a ValueError should be raised for None data."
+    except ValueError:
+        print('ValueError was successfully/correctly raised for empty sentence data input test4')
 
 
 if __name__ == '__main__':
     test()
-    print('done')
+    test2()
+    test3()
+    test4()
+    print('tests done')

@@ -26,8 +26,8 @@ def is_user_in_group(user, group):
     if user in group.get_users():
         return True
     else:
-        for g in group.get_groups():
-            if is_user_in_group(user, g):
+        for group_member in group.get_groups():
+            if is_user_in_group(user, group_member):
                 return True
     return False
 
@@ -56,8 +56,17 @@ def test():
     assert is_user_in_group('anotherChild_user', parent) == True, 'Test 6'
     assert is_user_in_group('anotherChild_user', sub_child) == False, 'Test 7'
 
+def test2():
+    empty_group = Group('empty_group')
+    assert is_user_in_group('user', empty_group) is False, 'User should not be found in an empty group but it was found.'
+
+def test3():
+    group3 = Group('UserWithSameNameAsGroup')
+    userName = 'UserWithSameNameAsGroup'
+    assert is_user_in_group(userName, group3) == False, f'User and Group have the same name, but User is not a member of the group. Should return False but {is_user_in_group(userName, group3)} was returned.'
 
 
 if __name__=='__main__':
     test()
+    test2()
     print('Done')
